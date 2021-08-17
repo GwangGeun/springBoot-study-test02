@@ -1,5 +1,7 @@
-package com.carrot.test02;
+package com.carrot.test02.repository;
 
+import com.carrot.test02.Member;
+import com.carrot.test02.MemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

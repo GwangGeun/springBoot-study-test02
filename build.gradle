@@ -1,38 +1,41 @@
+// gradle 학습 자료 : https://www.tutorialspoint.com/gradle/gradle_plugins.htm
+// plugin이란 미리 구성해놓은 task들의 그룹
 plugins {
 	id 'org.springframework.boot' version '2.5.3'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 }
 
-group = 'com.carrot'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+/*
+- subprojects는 settings.gradle에 include된 프로젝트 전부를 관리한다.
+- root 프로젝트까지 적용하고 싶다면 allprojects로 등록하면 된다.
+*/
+subprojects{
+	group = 'com.carrot'
+	version = '0.0.1-SNAPSHOT'
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
+	// 하단 plugin 속성들 참고 : https://dingue.tistory.com/17
+	apply plugin: 'java'
+	apply plugin: 'org.springframework.boot' // 부트를 사용한다
+	apply plugin: 'io.spring.dependency-management' // 의존성을 관리한다
+
+	sourceCompatibility = '11'
+	targetCompatibility = '11'
+
+	repositories {
+//		mavenLocal()
+		mavenCentral()
 	}
-}
 
-repositories {
-	mavenCentral()
-}
+	configurations {
+		compileOnly {
+			extendsFrom annotationProcessor
+		}
+	}
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-//	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+	dependencies {
+		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'mysql:mysql-connector-java'
-	annotationProcessor 'org.projectlombok:lombok'
-
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
-}
-
-test {
-	useJUnitPlatform()
+		compileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+	}
 }
